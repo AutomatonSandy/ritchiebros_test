@@ -88,7 +88,7 @@
                          <artifactId>maven-surefire-plugin</artifactId>
                          <configuration>
                          <suiteXmlFiles>
-                             <suiteXmlFile>src/test/resources/suites/UISuite.xml</suiteXmlFile>
+                             <suiteXmlFile>src/test/resources/suites/uitestsuite.xml</suiteXmlFile>
                          </suiteXmlFiles>
                          </configuration>
                      </plugin>
