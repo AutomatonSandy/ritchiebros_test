@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>test</groupId>
+  <artifactId>restassured</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>test_restassured</name>
+
+    <properties>
+        <surefire.version>3.2.5</surefire.version>
+        <allure.version>2.24.0</allure.version>
+    </properties>
+  <dependencies>
+    <!-- TestNG -->
+    <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>7.9.0</version>
+        <scope>test</scope>
+    </dependency>
+      <!-- allure reports -->
+          <dependency>
+              <groupId>io.qameta.allure</groupId>
+              <artifactId>allure-testng</artifactId>
+              <version>${allure.version}</version>
+          </dependency>
+    <!-- Logging -->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>2.23.1</version>
+    </dependency>
+      <dependency>
+          <groupId>org.testng</groupId>
+          <artifactId>testng</artifactId>
+          <version>7.4.0</version>
+          <scope>compile</scope>
+      </dependency>
+  <!-- selenium related -->
+      <dependency>
+          <groupId>org.seleniumhq.selenium</groupId>
+          <artifactId>selenium-java</artifactId>
+          <version>4.13.0</version>
+      </dependency>
+      <dependency>
+          <groupId>io.github.bonigarcia</groupId>
+          <artifactId>webdrivermanager</artifactId>
+          <version>5.6.3</version>
+      </dependency>
+  </dependencies>
+    <build>
+        <plugins>
+
+            <!-- Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!-- Surefire Plugin for TestNG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+ <profiles>
+         <profile>
+             <id>ui-tests</id>
+             <properties>
+                 <grid.url>http://localhost:4444/wd/hub</grid.url>
+             </properties>
+             <build>
+                 <plugins>
+                     <plugin>
+                         <groupId>org.apache.maven.plugins</groupId>
+                         <artifactId>maven-surefire-plugin</artifactId>
+                         <configuration>
+                         <suiteXmlFiles>
+                             <suiteXmlFile>src/test/resources/suites/UISuite.xml</suiteXmlFile>
+                         </suiteXmlFiles>
+                         </configuration>
+                     </plugin>
+                 </plugins>
+             </build>
+         </profile>
+ </profiles>
+
+</project>
