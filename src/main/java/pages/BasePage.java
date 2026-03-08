@@ -16,8 +16,13 @@ public class BasePage {
     }
 
     public synchronized String base_getResultString(String webElementXpath) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(webElementXpath)));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         WebElement searchResultElement = driver.findElement(By.xpath(webElementXpath));
         return searchResultElement.getText();
     }
