@@ -51,6 +51,8 @@ public class DriverFactory {
         if (browser.equals(CHROME_BROWSER)) {
             ChromeOptions options = new ChromeOptions();
             options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            options.setCapability("se:recordVideo", true); // Enable recording
+            options.setCapability("se:screenResolution", "1920x1080"); // Optional: set size
             driver = new RemoteWebDriver(new URL(gridUrl), options);
         }
 
