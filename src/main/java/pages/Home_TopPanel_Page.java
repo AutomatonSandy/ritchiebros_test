@@ -3,11 +3,16 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class Home_TopPanel {
+public class Home_TopPanel_Page extends  BasePage{
 
-    WebDriver driver;
-    public Home_TopPanel(WebDriver driver) {
-        this.driver = driver;
+//    private WebDriver driver;
+//    public Home_TopPanel_Page(WebDriver driver) {
+//        this.driver = driver;
+//    }
+
+
+    public Home_TopPanel_Page(WebDriver driver) {
+        super(driver);
     }
 
     public void enterValueIntoSearchBox(String searchText){

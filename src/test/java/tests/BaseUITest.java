@@ -3,6 +3,7 @@ package tests;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 import utility.ConfigReader;
 import utility.DriverFactory;
 
@@ -15,7 +16,7 @@ public class BaseUITest {
     private static final String BASE_URL_CONFIG_TEXT="ui.base.url";
 
     @Parameters("browser")
-    @BeforeTest(alwaysRun = true)
+    @BeforeMethod
     public void setup(String browser){
         driver = DriverFactory.initDriver(browser);
         driver.get(ConfigReader.get(BASE_URL_CONFIG_TEXT));
@@ -28,9 +29,13 @@ public class BaseUITest {
         }
     }
 
-    @AfterTest (alwaysRun = true)
+    @AfterMethod
     public void tearDown() {
         DriverFactory.quitDriver();
+    }
+
+    public void validateResults_SoftAssert(String expected, String actual, SoftAssert softAssert ){
+        softAssert.assertTrue(actual.contains(expected), "We expected --> "+expected +" will be in  -->"+actual );
     }
 }
 

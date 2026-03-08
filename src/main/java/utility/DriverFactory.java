@@ -1,6 +1,7 @@
 package utility;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,6 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 
 public class DriverFactory {
 
@@ -31,6 +33,7 @@ public class DriverFactory {
                 throw new RuntimeException(e);
             }
         }
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         driver.manage().window().maximize();
         return driver;
     }
@@ -47,6 +50,7 @@ public class DriverFactory {
         String gridUrl = System.getProperty(GRID_URL_STRING,WD_HUB_URL);
         if (browser.equals(CHROME_BROWSER)) {
             ChromeOptions options = new ChromeOptions();
+            options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             driver = new RemoteWebDriver(new URL(gridUrl), options);
         }
 
@@ -55,7 +59,9 @@ public class DriverFactory {
     private static void initializeLocalBrowsers(String browser){
         if (browser.equalsIgnoreCase(CHROME_BROWSER)) {
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase(EDGE_BROWSER)) {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();

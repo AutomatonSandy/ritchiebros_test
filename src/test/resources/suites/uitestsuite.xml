@@ -1,9 +1,10 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="UI Suite">
     <parameter name="browser" value="chrome"/>
-    <test name="Richie Bros Test">
+    <test name="Richie Bros Test" parallel="tests">
         <classes>
             <class name="tests.Ford150_Test"/>
+            <class name="tests.Chevy_Test" />
         </classes>
     </test>
 </suite>
