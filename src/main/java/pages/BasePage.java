@@ -1,7 +1,5 @@
 package pages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,20 +10,16 @@ import java.time.Duration;
 
 public class BasePage {
     WebDriver driver;
-    public Logger log = LogManager.getLogger(BasePage.class.getName());
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public String base_getResultString(String webElementXpath) {
-
+    public synchronized String base_getResultString(String webElementXpath) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        ;
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(webElementXpath)));
         WebElement searchResultElement = driver.findElement(By.xpath(webElementXpath));
-        String searchResult = searchResultElement.getText();
-        return searchResult;
+        return searchResultElement.getText();
     }
 
     public String base_readElementsAndReturnText(WebElement element, int index){

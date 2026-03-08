@@ -10,11 +10,11 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.Duration;
 
 public class DriverFactory {
 
-    public static WebDriver driver;
+    public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    public static WebDriver instance;
     private static final String REMOTE_DRIVER = "remote";
     private static final String UI_BROWSER_CONFIG="ui.browser";
     private static final String GRID_URL_STRING="grid.url";
@@ -22,28 +22,29 @@ public class DriverFactory {
     private static final String CHROME_BROWSER ="chrome";
     private static final String EDGE_BROWSER="edge";
 
-    public static WebDriver initDriver(String browser) {
-
-        if(!ConfigReader.get(UI_BROWSER_CONFIG).equals(REMOTE_DRIVER)){
-            initializeLocalBrowsers(browser);
-        }else{
-            try {
-                initializeRemoteBrowsers(browser);
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-        driver.manage().window().maximize();
-        return driver;
+    public static void initDriver(String browser) {
+       if(driver.get()== null) {
+           if (!ConfigReader.get(UI_BROWSER_CONFIG).equals(REMOTE_DRIVER)) {
+               initializeLocalBrowsers(browser);
+           } else {
+               try {
+                   initializeRemoteBrowsers(browser);
+               } catch (MalformedURLException e) {
+                   throw new RuntimeException(e);
+               }
+           }
+       }
     }
 
     public static WebDriver getDriver() {
-        return driver;
+        return driver.get();
     }
 
     public static void quitDriver() {
-        driver.quit();
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove();
+        }
     }
 
     private static void initializeRemoteBrowsers(String browser) throws MalformedURLException {
@@ -53,7 +54,9 @@ public class DriverFactory {
             options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             options.setCapability("se:recordVideo", true); // Enable recording
             options.setCapability("se:screenResolution", "1920x1080"); // Optional: set size
-            driver = new RemoteWebDriver(new URL(gridUrl), options);
+//            driver = new RemoteWebDriver(new URL(gridUrl), options);
+            instance = new RemoteWebDriver(new URL(gridUrl), options);
+            driver.set(instance);
         }
 
     }
@@ -63,10 +66,12 @@ public class DriverFactory {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
             options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-            driver = new ChromeDriver(options);
+            instance = new ChromeDriver(options);
+            driver.set(instance);
         } else if (browser.equalsIgnoreCase(EDGE_BROWSER)) {
             WebDriverManager.edgedriver().setup();
-            driver = new EdgeDriver();
+            instance = new EdgeDriver();
+            driver.set(instance);
         }
     }
 }

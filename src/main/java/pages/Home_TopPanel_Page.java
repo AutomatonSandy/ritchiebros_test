@@ -5,12 +5,6 @@ import org.openqa.selenium.WebDriver;
 
 public class Home_TopPanel_Page extends  BasePage{
 
-//    private WebDriver driver;
-//    public Home_TopPanel_Page(WebDriver driver) {
-//        this.driver = driver;
-//    }
-
-
     public Home_TopPanel_Page(WebDriver driver) {
         super(driver);
     }
