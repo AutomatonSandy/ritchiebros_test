@@ -1,14 +1,13 @@
 # ritchiebros_test
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/AutomatonSandy/ritchiebros_test)
 
 This repository contains a Selenium-based test automation framework for the Ritchie Bros. Auctioneers website. The project is built with Java, Maven, and TestNG, and is designed to run UI tests within a Dockerized Selenium Grid environment.
 
 ## ✨ Features
 
 *   **Page Object Model (POM):** The framework uses the Page Object Model design pattern to create a scalable and maintainable test suite.
-*   **Selenium Grid Integration:** Configured to run tests in parallel on a Selenium Grid managed by Docker Compose.
-*   **Video Recording:** The Docker setup includes a video container to record test execution sessions for easier debugging.
-*   **CI/CD Pipeline:** A GitHub Actions workflow (`uiTests.yml`) automates the testing process by setting up the environment, running tests, and uploading reports and videos.
+*   **Selenium Grid Integration:** Configured to run tests on a Selenium Grid managed by Docker Compose.
+*   **Video Recording:** The Docker setup includes a video container to record test execution sessions for easier debugging. [This is in progress from github actions]
+*   **CI/CD Pipeline:** A GitHub Actions workflow (`uiTests.yml`) automates the testing process by setting up the environment, running tests, and uploading reports.
 *   **TestNG Suite:** Test execution is managed through a TestNG XML suite (`uitestsuite.xml`), allowing for easy grouping and execution of test cases.
 *   **Configuration Management:** Test environment settings, like the base URL and browser type, are managed through a `config.properties` file.
 
@@ -95,5 +94,4 @@ This project includes a GitHub Actions workflow defined in `.github/workflows/ui
 3.  Starts the Selenium Grid using `docker-compose`.
 4.  Runs the UI tests using the `mvn clean test -Pui-tests` command.
 5.  Uploads the Surefire test reports as a build artifact.
-6.  Uploads the recorded session videos as a build artifact.
-7.  Stops the Selenium Grid.
+6.  Stops the Selenium Grid.
