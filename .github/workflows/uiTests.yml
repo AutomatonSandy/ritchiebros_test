@@ -39,12 +39,15 @@ jobs:
           path: target/surefire-reports/
 
       - name: Stop Grid
+        if: always()
         run: docker compose down
 
       - name: Wait for video file
+        if: always()
         run: sleep 5
 
       - name: Check videos
+        if: always()
         run: ls -R videos
 
       - name: Upload Videos
