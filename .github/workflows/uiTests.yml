@@ -22,8 +22,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Create videos folder
-        run: mkdir -p videos
+#      - name: Create videos folder
+#        run: mkdir -p videos
 
       - name: Set permissions for videos folder
         run: chmod -R 777 videos
@@ -51,7 +51,7 @@ jobs:
 
       - name: Wait for video file
         if: always()
-        run: sleep 30
+        run: sleep 60
 
       - name: Check videos
         if: always()
