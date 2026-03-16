@@ -25,6 +25,9 @@ jobs:
       - name: Create videos folder
         run: mkdir -p videos
 
+      - name: Set permissions for videos folder
+        run: chmod -R 777 videos
+
       - name: Start Grid
         run: docker compose up -d
 
@@ -38,13 +41,17 @@ jobs:
           name: test-report
           path: target/surefire-reports/
 
+      - name: Check Video Container Logs
+        if: always()
+        run: docker logs chrome-video
+
       - name: Stop Grid
         if: always()
         run: docker compose down
 
       - name: Wait for video file
         if: always()
-        run: sleep 15
+        run: sleep 30
 
       - name: Check videos
         if: always()
